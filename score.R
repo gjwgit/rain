@@ -31,11 +31,14 @@ ds %<>%
 
 names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
 
-load("rain.RData")
+load("rain_rpart_model.RData")
 
-cat("\n===========================================\n",
-    "Provide values for the following variables",
-    "\n===========================================\n\n")
+cat("
+==========================================
+Provide values for the following variables
+==========================================
+
+")
 
 # The following code based on rpart::printcp()
 # Copyright (c) Brian Ripley, GPLv2 License.

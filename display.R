@@ -9,7 +9,7 @@ suppressMessages(
   library(rpart)        # Decision tree modeller.
 })
 
-load("rain.RData")
+load("rain_rpart_model.RData")
 
 cat("\nTo display the vairable importance plot press <Enter>: ")
 invisible(readChar("stdin", 1))

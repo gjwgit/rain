@@ -15,7 +15,7 @@ MODEL_FILES = 			\
 	score.R			\
 	README.txt		\
 	DESCRIPTION.yaml	\
-	rain.RData
+	rain_rpart_model.RData	\
 
 # Include standard Makefile templates.
 
@@ -23,7 +23,7 @@ include ../git.mk
 include ../pandoc.mk
 include ../mlhub.mk
 
-$(MODEL).RData: train.R
+$(MODEL)_rpart_model.RData: train.R
 	Rscript $<
 
 clean::

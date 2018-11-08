@@ -21,7 +21,7 @@ suppressMessages(
 
 # Load the pre-built model.
 
-load("rain.RData")
+load("rain_rpart_model.RData")
 
 set.seed(42354)
 
@@ -52,7 +52,7 @@ predict(model, newdata=ds, type="class") %>%
   {sample_n(., 12) %>% print()} ->
 ev
   
-# Produce confusion matrix using Rattle?
+# Produce confusion matrix using Rattle.
 
 cat("\nPress Enter to continue on to the Confusion Matrix: ")
 invisible(readChar("stdin", 1))

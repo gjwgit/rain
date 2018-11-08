@@ -20,7 +20,7 @@ library(rpart)        # Model: decision tree rpart().
 
 # Load the pre-built model.
 
-load("rain.RData")
+load("rain_rpart_model.RData")
 
 # The following code based on rpart::printcp()
 # Copyright (c) Brian Ripley
