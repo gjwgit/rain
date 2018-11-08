@@ -44,11 +44,11 @@ cat("\n\n")
 
 # Additional specific packages, often as an interim measure.
 
-cat("We also need to install these specific versions...\n")
+cat("We also need to install these specific package versions...\n")
 
 pkgs <- c("https://cran.r-project.org/src/contrib/Archive/rpart.plot/rpart.plot_3.0.4.tar.gz")
 for (pkg in pkgs)
 {
-  cat("  ", basename(pkg), "\n")
+  cat("", basename(pkg), "\n")
   install.packages(pkg, repos=NULL, lib=lib)
 }

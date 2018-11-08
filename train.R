@@ -27,7 +27,7 @@ model <- rpart(target ~ ., data=ds, parms=list(prior=c(0.6, 0.4)))
 
 cat("====================\nModel Saved as RData\n====================\n\n")
 
-save(model, file="rain.RData")
+save(model, file="rpart_model.RData")
 
 # Suggest next step.
 

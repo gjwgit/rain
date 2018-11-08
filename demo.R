@@ -1,8 +1,12 @@
-# Model demonstrator. The aim is to demonstrate "something" about the
-# model. In this case it is simply to run the model and evaluate its
-# performance on a small dataset. For other models this might be
-# limited to demonstrating the model in action on some actual data and
-# impress the user!
+cat("=====================
+Predict Rain Tomorrow
+=====================
+
+Below we show the predictions after applying the pre-built model to a
+random subset of a dataset of previously unseen daily observations.
+This provides an insight into the performance of the model.
+
+")
 
 # Load model, predict on a small dataset, present evaluation.
 
@@ -15,13 +19,13 @@ suppressMessages(
   library(rattle)
 })
 
-set.seed(423)
+# Load the pre-built model.
 
 load("rain.RData")
 
-cat("\n=====================\nPredict Rain Tomorrow\n=====================\n\n")
+set.seed(42354)
 
-cat("The model is used to score a validation dataset so as\nto provide an estimate of the model's accuracy.\n\n")
+# Load a sample dataset, predict, and display a sample of predictions.
 
 dsname <- "weatherAUS"
 ds     <- get(dsname)
@@ -45,16 +49,29 @@ predict(model, newdata=ds, type="class") %>%
   set_names(c("Predicted", "Actual")) %>%
   select(Actual, Predicted) %>%
   mutate(Error=ifelse(Predicted==Actual, "", "<----")) %T>%
-  print() ->
+  {sample_n(., 12) %>% print()} ->
 ev
   
 # Produce confusion matrix using Rattle?
 
-cat("\n================\nConfusion Matrix\n================\n\n")
+cat("\nPress Enter to continue on to the Confusion Matrix: ")
+invisible(readChar("stdin", 1))
 
-per <- errorMatrix(ev$Actual, ev$Predicted)
+cat("
+================
+Confusion Matrix
+================
 
-per/100
+A confusion matrix summarises the performance of the model on this
+dataset. The figures here are percentages, aggregating the actual versus
+predicted outcomes. The Error column represents the class error.
+
+Notice the model's error rate and note that the model is useful in
+giving an indication of the prospect of it raining tomorrow.
+
+")
+
+per <- errorMatrix(ev$Actual, ev$Predicted) %T>% print()
 
 # Calculate the overall error percentage.
 
@@ -64,5 +81,7 @@ cat(sprintf("\nOverall error: %d%%\n", 100-sum(diag(per), na.rm=TRUE)))
 
 cat(sprintf("Average class error: %.1f%%\n", mean(per[,"Error"], na.rm=TRUE)))
 
-cat("\nNotice the model's error rate and note that the model is useful in",
-    "\ngiving an indication of the prospect of it raining tomorrow.\n")
+# RISK CHART ? OR 
+
+cat("\nPress Enter to finish the demonstration: ")
+invisible(readChar("stdin", 1))

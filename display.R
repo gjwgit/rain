@@ -11,6 +11,15 @@ suppressMessages(
 
 load("rain.RData")
 
+cat("\nTo display the vairable importance plot press <Enter>: ")
+invisible(readChar("stdin", 1))
+
+fname <- "varimp.pdf"
+pdf(fname)
+print(ggVarImp(model))
+invisible(dev.off())
+system(sprintf("atril --preview %s", fname), ignore.stderr=TRUE, wait=FALSE)
+
 cat("\nTo display the decision tree press <Enter>: ")
 invisible(readChar("stdin", 1))
 
@@ -20,11 +29,3 @@ fancyRpartPlot(model, sub="")
 invisible(dev.off())
 system(sprintf("atril --preview %s", fname), ignore.stderr=TRUE, wait=FALSE)
 
-cat("\nTo display the vairable importance plot press <Enter>: ")
-invisible(readChar("stdin", 1))
-
-fname <- "varimp.pdf"
-pdf(fname)
-print(ggVarImp(model))
-invisible(dev.off())
-system(sprintf("atril --preview %s", fname), ignore.stderr=TRUE, wait=FALSE)
