@@ -1,3 +1,8 @@
+########################################################################
+# Introduce the concept of decision tree model through MLHub
+#
+# Copyright 2018 Graham.Williams@togaware.com
+
 cat("=====================
 Predict Rain Tomorrow
 =====================
@@ -8,7 +13,7 @@ This provides an insight into the performance of the model.
 
 ")
 
-# Load model, predict on a small dataset, present evaluation.
+# Load required packages.
 
 suppressMessages(
 {
@@ -19,7 +24,9 @@ suppressMessages(
   library(rattle)
 })
 
+#-----------------------------------------------------------------------
 # Load the pre-built model.
+#-----------------------------------------------------------------------
 
 load("rain_rpart_model.RData")
 
@@ -43,7 +50,8 @@ ds %>% filter(target == "No") %>% sample_n(10) -> dsn
 
 ds <- rbind(dsn, dsy)
 
-predict(model, newdata=ds, type="class") %>%
+ds %>%
+  predict(model, newdata=., type="class") %>%
   as.data.frame() %>%
   cbind(Actual=ds$target) %>%
   set_names(c("Predicted", "Actual")) %>%
@@ -52,7 +60,9 @@ predict(model, newdata=ds, type="class") %>%
   {sample_n(., 12) %>% print()} ->
 ev
   
+#-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
+#-----------------------------------------------------------------------
 
 cat("\nPress Enter to continue on to the Confusion Matrix: ")
 invisible(readChar("stdin", 1))
@@ -75,13 +85,14 @@ per <- errorMatrix(ev$Actual, ev$Predicted) %T>% print()
 
 # Calculate the overall error percentage.
 
-cat(sprintf("\nOverall error: %d%%\n", 100-sum(diag(per), na.rm=TRUE)))
+cat(sprintf("\nOverall error: %.0f%%\n", 100-sum(diag(per), na.rm=TRUE)))
 
 # Calculate the averaged class error percentage.
 
-cat(sprintf("Average class error: %.1f%%\n", mean(per[,"Error"], na.rm=TRUE)))
+cat(sprintf("Average class error: %.0f%%\n", mean(per[,"Error"], na.rm=TRUE)))
 
-# RISK CHART ? OR 
+# TODO: ROC PLOT 
 
-cat("\nPress Enter to finish the demonstration: ")
+cat("
+Press Enter to finish the demonstration: ")
 invisible(readChar("stdin", 1))

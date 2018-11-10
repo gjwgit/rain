@@ -1,4 +1,6 @@
-# Build/save a decision tree model to predict rain tomorrow (target).
+# A sample model build using the weather dataset to predit rain tomorrow. We
+# illustrate the model build and then save the model to file so that
+# we can later load the model and use it to score new datasets.
 
 suppressMessages(
 {

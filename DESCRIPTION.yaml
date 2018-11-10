@@ -1,19 +1,20 @@
 --- # RAIN TOMORROW
 meta:
-  name        : rain
-  title       : Predict rain tomorrow using.
-  keywords    : r, prediction, classification, decision tree, introductory, weather, climate
-  languages   : R
-  modeller    : rpart
-  type        : decision tree
-  display     : display
-  license     : gpl3
-  version     : 1.2.0
-  author      : Graham.Williams@togaware.com
-  maintainer  : Graham Williams <Graham.Williams@microsoft.com>
-  filename     : pool/main/r/rain/rain_1.2.0.mlm
-  date         : 2018-11-08 17:38:25
-  dependencies:
+  name         : rain
+  title        : Predict rain tomorrow using.
+  keywords     : r, prediction, classification, decision tree, introductory, weather, climate
+  version      : 2.1.0
+  languages    : R
+  modeller     : rpart
+  type         : decision tree
+  display      : display
+  license      : gpl3
+  author       : Graham.Williams@togaware.com
+  maintainer   : Graham.Williams@togaware.com
+  url          : https://github.com/gjwgit/rain
+  filename     : pool/main/r/rain/rain_2.1.0.mlm
+  dependencies :
+    sh: atril
     R: rpart, magrittr, dplyr, tidyr, rattle, rpart.plot
 commands:
   demo   : Run the model and present performance metrics.
