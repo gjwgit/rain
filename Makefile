@@ -33,5 +33,4 @@ realclean:: clean
 	rm -rf $(MODEL)_*.mlm $(MODEL)_rpart_model.RData
 	rm -f  	rpart_riskchart.pdf 		\
 		rpart_model.pdf			\
-	        $(MODEL)_rpart_model.RData 	\
 
