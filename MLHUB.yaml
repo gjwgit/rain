@@ -3,7 +3,7 @@ meta:
   name         : rain
   title        : Predict rain tomorrow using.
   keywords     : r, prediction, classification, decision tree, introductory, weather, climate
-  version      : 3.0.0
+  version      : 3.0.1
   languages    : R
   modeller     : rpart
   type         : decision tree
@@ -14,8 +14,15 @@ meta:
   url          : https://github.com/gjwgit/rain
   filename     : pool/main/r/rain/rain_2.1.0.mlm
 dependencies :
-  system : atril
-  cran   : rpart, magrittr, dplyr, tidyr, rattle, rpart.plot
+  system:
+    - atril
+  cran:
+    - rpart
+    - magrittr
+    - dplyr
+    - tidyr
+    - rattle
+    - rpart.plot
 commands:
   demo   : Run the model and present performance metrics.
   print  : View a textual representation of the model.
