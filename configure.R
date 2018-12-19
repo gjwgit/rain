@@ -40,7 +40,7 @@ dir.create(lib, showWarnings=FALSE, recursive=TRUE)
 if (length(install))
 {
   cat(sprintf("Installing '%s' into '%s'...", paste(install, collapse="', '"), lib))
-  install.packages(install, lib=lib)
+  install.packages(install, repos="https://cran.r-project.org/", lib=lib)
 }
 cat("\n")
 
