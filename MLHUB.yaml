@@ -15,7 +15,8 @@ meta:
   filename     : pool/main/r/rain/rain_2.1.0.mlm
 dependencies :
   system:
-    - atril
+    - atril       # For viewing generated PDF plots
+    - libxml2-dev # For rattle source package install.
   cran:
     - rpart
     - magrittr
