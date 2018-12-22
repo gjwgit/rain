@@ -24,6 +24,14 @@ dependencies :
     - tidyr
     - rattle
     - rpart.plot
+  files:
+    - demo.R
+    - display.R
+    - print.R
+    - rain_rpart_model.RData
+    - README.md
+    - score.R
+    - train.R
 commands:
   demo   : Run the model and present performance metrics.
   print  : View a textual representation of the model.
