@@ -7,8 +7,8 @@ cat("=====================
 Predict Rain Tomorrow
 =====================
 
-Below we show the predictions after applying the pre-built model to a
-random subset of a dataset of previously unseen daily observations.
+Below we show the predictions after applying the pre-built decision tree
+model to a random subset of a dataset of previously unseen daily observations.
 This provides an insight into the performance of the model.
 
 ")
@@ -17,11 +17,11 @@ This provides an insight into the performance of the model.
 
 suppressMessages(
 {
-  library(rpart)
-  library(magrittr)
-  library(dplyr)
+  library(rpart)       # Model: decision tree rpart().
+  library(magrittr)    # Data pipelines: %>% %<>% %T>% equals().
+  library(dplyr)       # Wrangling: tbl_df(), group_by(), print().
   library(tidyr)
-  library(rattle)
+  library(rattle)      # Support: normVarNames(), riskchart(), errorMatrix().
 })
 
 #-----------------------------------------------------------------------
@@ -59,12 +59,12 @@ ds %>%
   mutate(Error=ifelse(Predicted==Actual, "", "<----")) %T>%
   {sample_n(., 12) %>% print()} ->
 ev
-  
+
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
 
-cat("\nPress Enter to continue on to the Confusion Matrix: ")
+cat("\nPress Enter to continue on to a Confusion Matrix: ")
 invisible(readChar("stdin", 1))
 
 cat("
@@ -72,12 +72,16 @@ cat("
 Confusion Matrix
 ================
 
-A confusion matrix summarises the performance of the model on this
-dataset. The figures here are percentages, aggregating the actual versus
-predicted outcomes. The Error column represents the class error.
+A confusion matrix summarises the performance of the model on this evluation
+dataset. All figures in the table are percentages and are calculated across
+the predicitions made by the model for each observation and compared to the
+actual or known values of the target variable. The first column reports the
+true negative and false negative rates whilst the second column reports the
+false positive and true positive rates.
 
-Notice the model's error rate and note that the model is useful in
-giving an indication of the prospect of it raining tomorrow.
+The Error column calculates the error across each class. We also report the
+overall error which is calculated as the number of errors over the number of
+observations. The average of the class errors is also reported. 
 
 ")
 
@@ -91,8 +95,66 @@ cat(sprintf("\nOverall error: %.0f%%\n", 100-sum(diag(per), na.rm=TRUE)))
 
 cat(sprintf("Average class error: %.0f%%\n", mean(per[,"Error"], na.rm=TRUE)))
 
-# TODO: ROC PLOT 
+# Calculate data for the risk chart.
+
+cat("\nPress Enter to continue on to a Risk Chart: ")
+invisible(readChar("stdin", 1))
 
 cat("
+==========
+Risk Chart
+==========
+
+A risk chart presents a cumulative performance view of the model.
+
+The x-axis is the percentage of the number of days in the dataset as we
+progress (left to right) from the highest probability of a rain tomorrow
+to the lowest probability of rain tomorrow.
+
+The y-axis is the expected performance of the model in predicting rain
+tomorrow. It is the percentage of the known days on which it rains that
+are predicted by the model for the given recall (x-axis).
+
+The more area under the curve the better the model performance. A perfect
+model would follow the grey line. The Precision line represents
+the lift offered by the model, with the lift values on the right hand axis.
+")
+
+ev$Actual %>%
+  as.integer() %>%
+  subtract(1) ->
+ac
+
+ds %>%
+  predict(model, newdata=., type="prob") %>%
+  as.data.frame() %>%
+  '['(,2) ->
+pr
+
+## evaluateRisk(pr, ac) %>%
+##   rownames_to_column("Complexity") %>%
+##   mutate(Complexity=as.numeric(Complexity)) %>%
+##   round(2) %>%
+##   print()
+
+# Display the risk chart.
+
+fname <- "rain_rpart_riskchart.pdf"
+pdf(file=fname, width=5, height=5)
+riskchart(pr, ac,
+          title="Risk Chart for Decision Tree Model",
+          recall.name="Rains Tomorrow",
+          show.lift=TRUE,
+          show.precision=TRUE,
+          legend.horiz=FALSE) %>% print()
+invisible(dev.off())
+
+if (Sys.getenv("DISPLAY") != "")
+{
+  system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
+}
+
+cat("
+Close the graphic window using Ctrl-w.
 Press Enter to finish the demonstration: ")
 invisible(readChar("stdin", 1))
