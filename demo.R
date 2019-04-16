@@ -140,8 +140,6 @@ if (Sys.getenv("DISPLAY") != "")
   system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
 }
 
-cat("
-Close the graphic window using Ctrl-w.
-")
+cat("Close the graphic window using Ctrl-w.\n")
 
 ask_continue()
