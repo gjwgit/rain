@@ -16,6 +16,8 @@ meta:
 dependencies :
   system:
     - atril       # For viewing generated PDF plots
+  github:
+    - mlhubber/mlhub # Remove from here once this is mlhub dependency.
   cran:
     - rpart
     - magrittr
@@ -23,18 +25,11 @@ dependencies :
     - tidyr
     - rattle
     - rpart.plot
-  github:
-    - mlhubber/mlhub # Remove from here once this is mlhub dependency.
   files:
     - demo.R
-    - display.R
-    - print.R
     - rain_rpart_model.RData
     - README.md
     - score.R
-    - train.R
 commands:
   demo   : Run the model and present performance metrics.
-  print  : View a textual representation of the model.
-  display: View a graphical representation of the model.
   score  : Predict rain tomorrow on your data.
