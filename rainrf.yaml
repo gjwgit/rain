@@ -27,6 +27,6 @@ dependencies :
   files:
     - demorf.R: demo.R
     - https://access.togaware.com/rain_rf_model.RData
-    - demorf.md: README.md
+    - rainrf.md: README.md
 commands:
   demo   : Run the model and present performance metrics.
