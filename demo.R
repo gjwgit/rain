@@ -20,6 +20,7 @@ suppressMessages(
   library(dplyr)       # Wrangling: tbl_df(), group_by(), print().
   library(tidyr)
   library(rattle)      # Support: normVarNames(), riskchart(), errorMatrix().
+  library(ggplot2)
 })
 
 #-----------------------------------------------------------------------
