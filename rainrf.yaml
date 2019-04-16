@@ -1,0 +1,32 @@
+--- # RAIN RF
+meta:
+  name         : rainrf
+  title        : Predict rain tomorrow using a random forest model.
+  keywords     : r, prediction, classification, random forest, introductory, weather, climate
+  version      : 1.0.0
+  languages    : R
+  modeller     : rpart
+  type         : random forest
+  display      : demo
+  license      : gpl3
+  author       : Graham.Williams@togaware.com
+  maintainer   : Graham.Williams@togaware.com
+  url          : https://github.com/gjwgit/rain
+dependencies :
+  system:
+    - atril       # For viewing generated PDF plots
+  github:
+    - mlhubber/mlhub # Remove from here once this is mlhub dependency.
+  cran:
+    - randomForest
+    - magrittr
+    - dplyr
+    - tidyr
+    - rattle
+    - rpart.plot
+  files:
+    - demorf.R: demo.R
+    - https://access.togaware.com/rain_rf_model.RData
+    - demorf.md: README.md
+commands:
+  demo   : Run the model and present performance metrics.
