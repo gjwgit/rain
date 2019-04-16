@@ -60,6 +60,101 @@ ds %>%
 ev
 
 #-----------------------------------------------------------------------
+# Explore the model itself - Variable Importance
+#-----------------------------------------------------------------------
+
+ask_continue()
+
+inform_about("Variable Importance",
+"One aspect of understanding the data and models that we build is what
+variables play the most significant role in predicting the outcome.
+
+We first list the variables that are actually found by the algorithm
+to be effective in the model. Then we list all the variables and report
+their relative importance in predicting the outcome.
+")
+
+# The following code based on rpart::printcp()
+# Copyright (c) Brian Ripley
+
+frame <- model$frame
+leaves <- frame$var == "<leaf>"
+used <- unique(frame$var[!leaves])
+
+cat("Variables Used:  ", paste(sort(as.character(used)), collapse=", "), ".\n\n", sep="")
+
+# The following code based on rpart:::summary.rpart()
+# Copyright (c) Brian Ripley
+
+cat("Relative Importance of Variables:\n\n")
+
+varimp <- model$variable.importance
+varimp <- round(100 * varimp/sum(varimp))
+
+print(varimp[varimp>0])
+
+#-----------------------------------------------------------------------
+# Explore the model itself - Visual Variable Importance
+#-----------------------------------------------------------------------
+
+if (Sys.getenv("DISPLAY") != "")
+{
+  ask_continue()
+
+  inform_about("Visual Variable Importance",
+"An understanding of the relative importance of each of the variables
+adds further insight into the data.
+")
+  
+  fname <- "varimp.pdf"
+  pdf(fname)
+  print(ggVarImp(model))
+  invisible(dev.off())
+  system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
+
+  cat("Close the graphic window using Ctrl-w.\n")
+}
+
+#-----------------------------------------------------------------------
+# Explore the model itself - Textual Decision Tree
+#-----------------------------------------------------------------------
+
+ask_continue()
+
+inform_about("Actual Decision Tree",
+"The line begining with 'node)' is a legend. Split is a test, n observations,
+loss is the error, yval the majority class, and yprob is class probability.
+")
+
+print(model)
+
+#-----------------------------------------------------------------------
+# Explore the model itself - Visual Decision Tree
+#-----------------------------------------------------------------------
+
+if (Sys.getenv("DISPLAY") != "")
+{
+  ask_continue()
+
+  inform_about("Visual Decision Tree",
+"A visual representation of a model can often be more insightful
+than the printed textual representation. For a decision tree
+model, representing the discovered knowledge as a decision tree, we
+read the tree from top to bottom, traversing the path corresponding
+to the answer to the question presented at each node. The leaf node
+has the final decision together with the class probabilities.
+")
+
+  fname <- "rpart_model.pdf"
+  pdf(fname)
+  fancyRpartPlot(model, sub="")
+  invisible(dev.off())
+  system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
+
+  cat("Close the graphic window using Ctrl-w.\n")
+}
+
+#-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
 
@@ -143,4 +238,3 @@ if (Sys.getenv("DISPLAY") != "")
 
 cat("Close the graphic window using Ctrl-w.\n")
 
-ask_continue()
