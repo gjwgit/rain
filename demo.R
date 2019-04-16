@@ -3,14 +3,12 @@
 #
 # Copyright 2018 Graham.Williams@togaware.com
 
-cat("=====================
-Predict Rain Tomorrow
-=====================
+library(mlhub)
 
-Below we show the predictions after applying the pre-built decision tree
+inform_about("Predict Rain Tomorrow",
+"Below we show the predictions after applying the pre-built decision tree
 model to a random subset of a dataset of previously unseen daily observations.
 This provides an insight into the performance of the model.
-
 ")
 
 # Load required packages.
@@ -64,15 +62,10 @@ ev
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
 
-cat("\nPress Enter to continue on to a Confusion Matrix: ")
-invisible(readChar("stdin", 1))
+ask_continue()
 
-cat("
-================
-Confusion Matrix
-================
-
-A confusion matrix summarises the performance of the model on this evluation
+inform_about("Confusion Matrix",
+"A confusion matrix summarises the performance of the model on this evluation
 dataset. All figures in the table are percentages and are calculated across
 the predicitions made by the model for each observation and compared to the
 actual or known values of the target variable. The first column reports the
@@ -82,7 +75,6 @@ false positive and true positive rates.
 The Error column calculates the error across each class. We also report the
 overall error which is calculated as the number of errors over the number of
 observations. The average of the class errors is also reported. 
-
 ")
 
 per <- errorMatrix(ev$Actual, ev$Predicted) %T>% print()
@@ -97,23 +89,17 @@ cat(sprintf("Average class error: %.0f%%\n", mean(per[,"Error"], na.rm=TRUE)))
 
 # Calculate data for the risk chart.
 
-cat("\nPress Enter to continue on to a Risk Chart: ")
-invisible(readChar("stdin", 1))
+ask_continue()
 
-cat("
-==========
-Risk Chart
-==========
+inform_about("Risk Chart",
+"A risk chart presents a cumulative performance view of the model.
 
-A risk chart presents a cumulative performance view of the model.
+The x-axis is the days sorted (left to right) from the highest probability
+of rain tomorrow to the lowest probability of rain tomorrow.
 
-The x-axis is the percentage of the number of days in the dataset as we
-progress (left to right) from the highest probability of a rain tomorrow
-to the lowest probability of rain tomorrow.
-
-The y-axis is the expected performance of the model in predicting rain
-tomorrow. It is the percentage of the known days on which it rains that
-are predicted by the model for the given recall (x-axis).
+The y-axis is the expected performance of the model in predicting rain. It is
+the percentage of the known days on which it rains that are predicted by the
+model for the given recall (x-axis).
 
 The more area under the curve the better the model performance. A perfect
 model would follow the grey line. The Precision line represents
@@ -156,5 +142,6 @@ if (Sys.getenv("DISPLAY") != "")
 
 cat("
 Close the graphic window using Ctrl-w.
-Press Enter to finish the demonstration: ")
-invisible(readChar("stdin", 1))
+")
+
+ask_continue()
