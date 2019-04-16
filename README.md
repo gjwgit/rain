@@ -1,12 +1,13 @@
 Predicting Rain Tomorrow
 ========================
 
-This [MLHub](https://mlhub.ai) package uses the weatherAUS dataset
+These [MLHub](https://mlhub.ai) packages use the weatherAUS dataset
 from R's [Rattle](https://rattle.togaware.com) package to train a
 predictive model for the probability of it raining tomorrow based on
 today's weather observations. The training dataset consists of daily
 weather observations from weather stations across Australia capturing
-the amount of sunshine, the humidity, the amount of rain, etc.
+the amount of sunshine, the humidity, the amount of rain, etc. Models
+available include decision tree (rain) and random forest (rainrf).
 
 This model comes from the Essentials of Data Science by Graham Williams
 <https://bit.ly/essentials_data_science>. Further support material is
@@ -18,12 +19,22 @@ Visit the github repository for more details:
 Usage
 -----
 
-To install and run the pre-built model:
+- To install mlhub (Ubuntu 18.04 LTS)
 
-    $ pip install mlhub
-    $ ml install rain
-    $ ml configure rain
-    $ ml demo rain
-    $ ml print rain
-    $ ml display rain
-    $ ml score rain
+  ```shell
+  $ pip3 install mlhub
+  ```
+
+- To install and configure the demo:
+
+  ```shell
+  $ ml install   rain
+  $ ml configure rain
+  ```
+
+Demonstration
+-------------
+
+```console
+$ ml demo azanomaly
+```
