@@ -3,7 +3,7 @@ meta:
   name         : rain
   title        : Predict rain tomorrow using a decision tree model.
   keywords     : r, prediction, classification, decision tree, introductory, weather, climate
-  version      : 3.0.3
+  version      : 3.1.0
   languages    : R
   modeller     : rpart
   type         : decision tree
@@ -23,6 +23,8 @@ dependencies :
     - tidyr
     - rattle
     - rpart.plot
+  github:
+    - mlhubber/mlhub # Remove from here once this is mlhub dependency.
   files:
     - demo.R
     - display.R
