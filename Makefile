@@ -32,4 +32,4 @@ clean::
 	rm -rf README.txt dtree.pdf varimp.pdf
 
 realclean:: clean
-	rm -f $(MODE)_*.pdf
+	rm -f rain_rpart_riskchart.pdf rpart_model.pdf
