@@ -12,7 +12,7 @@ meta:
   author       : Graham.Williams@togaware.com
   maintainer   : Graham.Williams@togaware.com
   url          : https://github.com/gjwgit/rain
-  filename     : pool/main/r/rain/rain_2.1.0.mlm
+  yaml         : gjwgit/rain:raindt.yaml
 dependencies :
   system:
     - atril       # For viewing generated PDF plots
@@ -26,9 +26,9 @@ dependencies :
     - rattle
     - rpart.plot
   files:
-    - demo.R
+    - raindt.R: demo.R
     - rain_rpart_model.RData
-    - README.md
+    - raindt.md: README.md
     - score.R
 commands:
   demo   : Run the model and present performance metrics.
