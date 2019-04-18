@@ -16,8 +16,6 @@ meta:
 dependencies :
   system:
     - atril       # For viewing generated PDF plots
-  github:
-    - mlhubber/mlhub # Remove from here once this is mlhub dependency.
   cran:
     - rpart
     - magrittr
@@ -26,8 +24,8 @@ dependencies :
     - rattle
     - rpart.plot
   files:
-    - raindt.R: demo.R
     - rain_rpart_model.RData
+    - raindt.R: demo.R
     - raindt.md: README.md
     - score.R
 commands:
