@@ -3,7 +3,7 @@ meta:
   name         : rain
   title        : Predict rain tomorrow using a decision tree model.
   keywords     : r, prediction, classification, decision tree, introductory, weather, climate
-  version      : 3.3.0
+  version      : 3.3.1
   languages    : R
   modeller     : rpart
   type         : decision tree
