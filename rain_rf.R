@@ -19,7 +19,7 @@ suppressMessages(
   library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
   library(dplyr)        # Wrangling: tbl_df(), group_by(), print().
   library(tidyr)
-  library(rattle)      # Support: normVarNames(), riskchart(), errorMatrix().
+  library(rattle)       # Support: normVarNames(), riskchart(), errorMatrix().
   library(ggplot2)
 })
 
@@ -63,15 +63,10 @@ ev
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
 
-cat("\nPress Enter to continue on to a Confusion Matrix: ")
-invisible(readChar("stdin", 1))
+ask_continue()
 
-cat("
-================
-Confusion Matrix
-================
-
-A confusion matrix summarises the performance of the model on this evluation
+inform_about("Confusion Matrix",
+"A confusion matrix summarises the performance of the model on this evluation
 dataset. All figures in the table are percentages and are calculated across
 the predicitions made by the model for each observation and compared to the
 actual or known values of the target variable. The first column reports the
@@ -81,7 +76,6 @@ false positive and true positive rates.
 The Error column calculates the error across each class. We also report the
 overall error which is calculated as the number of errors over the number of
 observations. The average of the class errors is also reported. 
-
 ")
 
 per <- errorMatrix(ev$Actual, ev$Predicted) %T>% print()
@@ -96,15 +90,10 @@ cat(sprintf("Average class error: %.0f%%\n", mean(per[,"Error"], na.rm=TRUE)))
 
 # Calculate data for the risk chart.
 
-cat("\nPress Enter to continue on to a Risk Chart: ")
-invisible(readChar("stdin", 1))
+ask_continue()
 
-cat("
-==========
-Risk Chart
-==========
-
-A risk chart presents a cumulative performance view of the model.
+inform_about("Risk Chart",
+"A risk chart presents a cumulative performance view of the model.
 
 The x-axis is the days sorted (left to right) from the highest probability
 of rain tomorrow to the lowest probability of rain tomorrow.
@@ -147,12 +136,5 @@ riskchart(pr, ac,
           legend.horiz=FALSE) %>% print()
 invisible(dev.off())
 
-if (Sys.getenv("DISPLAY") != "")
-{
-  system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
-}
+preview_file(fname)
 
-cat("
-Close the graphic window using Ctrl-w.
-Press Enter to finish the demonstration: ")
-invisible(readChar("stdin", 1))
