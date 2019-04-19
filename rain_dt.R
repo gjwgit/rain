@@ -27,7 +27,7 @@ suppressMessages(
 # Load the pre-built model.
 #-----------------------------------------------------------------------
 
-load("rain_rpart_model.RData")
+load("rain_dt_model.RData")
 
 set.seed(42354)
 
@@ -97,23 +97,19 @@ print(varimp[varimp>0])
 # Explore the model itself - Visual Variable Importance
 #-----------------------------------------------------------------------
 
-if (Sys.getenv("DISPLAY") != "")
-{
-  ask_continue()
+ask_continue()
 
-  inform_about("Visual Variable Importance",
+inform_about("Visual Variable Importance",
 "An understanding of the relative importance of each of the variables
 adds further insight into the data.
 ")
   
-  fname <- "varimp.pdf"
-  pdf(fname)
-  print(ggVarImp(model))
-  invisible(dev.off())
-  system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
+fname <- "rain_dt_varimp.pdf"
+pdf(fname)
+print(ggVarImp(model))
+invisible(dev.off())
 
-  cat("Close the graphic window using Ctrl-w.\n")
-}
+preview_file(fname)
 
 #-----------------------------------------------------------------------
 # Explore the model itself - Textual Decision Tree
@@ -132,11 +128,9 @@ print(model)
 # Explore the model itself - Visual Decision Tree
 #-----------------------------------------------------------------------
 
-if (Sys.getenv("DISPLAY") != "")
-{
-  ask_continue()
+ask_continue()
 
-  inform_about("Visual Decision Tree",
+inform_about("Visual Decision Tree",
 "A visual representation of a model can often be more insightful
 than the printed textual representation. For a decision tree
 model, representing the discovered knowledge as a decision tree, we
@@ -145,14 +139,12 @@ to the answer to the question presented at each node. The leaf node
 has the final decision together with the class probabilities.
 ")
 
-  fname <- "rpart_model.pdf"
-  pdf(fname)
-  fancyRpartPlot(model, sub="")
-  invisible(dev.off())
-  system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
+fname <- "rain_dt_model.pdf"
+pdf(fname)
+fancyRpartPlot(model, sub="")
+invisible(dev.off())
 
-  cat("Close the graphic window using Ctrl-w.\n")
-}
+preview_file(fname)
 
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
@@ -221,7 +213,7 @@ pr
 
 # Display the risk chart.
 
-fname <- "rain_rpart_riskchart.pdf"
+fname <- "rain_dt_riskchart.pdf"
 pdf(file=fname, width=5, height=5)
 riskchart(pr, ac,
           title="Risk Chart for Decision Tree Model",
@@ -231,10 +223,5 @@ riskchart(pr, ac,
           legend.horiz=FALSE) %>% print()
 invisible(dev.off())
 
-if (Sys.getenv("DISPLAY") != "")
-{
-  system(paste("atril --preview", fname), ignore.stderr=TRUE, wait=FALSE)
-}
-
-cat("Close the graphic window using Ctrl-w.\n")
+preview_file(fname)
 
