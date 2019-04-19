@@ -23,6 +23,7 @@ dependencies :
     - tidyr
     - rattle
     - rpart.plot
+    - tibble
   files:
     - rain_dt_model.RData
     - rain_dt.R: demo.R
