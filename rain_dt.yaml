@@ -1,13 +1,13 @@
 --- # RAIN
 meta:
-  name         : rain
+  name         : rain_dt
   title        : Predict rain tomorrow using a decision tree model.
   keywords     : r, prediction, classification, decision tree, introductory, weather, climate
   version      : 4.0.0
   languages    : R
   modeller     : rpart
   type         : decision tree
-  display      : display
+  display      : demo
   license      : gpl3
   author       : Graham.Williams@togaware.com
   maintainer   : Graham.Williams@togaware.com
@@ -25,8 +25,8 @@ dependencies :
     - rpart.plot
   files:
     - rain_rpart_model.RData
-    - raindt.R: demo.R
-    - raindt.md: README.md
+    - rain_dt.R: demo.R
+    - rain_dt.md: README.md
     - score.R
 commands:
   demo   : Run the model and present performance metrics.
