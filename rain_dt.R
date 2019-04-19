@@ -21,6 +21,7 @@ suppressMessages(
   library(tidyr)
   library(rattle)      # Support: normVarNames(), riskchart(), errorMatrix().
   library(ggplot2)
+  library(tibble)
 })
 
 #-----------------------------------------------------------------------
@@ -177,6 +178,38 @@ cat(sprintf("Average class error: %.0f%%\n", mean(per[,"Error"], na.rm=TRUE)))
 
 # Calculate data for the risk chart.
 
+ev$Actual %>%
+  as.integer() %>%
+  subtract(1) ->
+ac
+
+ds %>%
+  predict(model, newdata=., type="prob") %>%
+  as.data.frame() %>%
+  '['(,2) ->
+pr
+
+## ask_continue()
+
+## Remove for now until better explained.
+
+## inform_about("Complexity Tuning",
+## "A decision tree model has a paramter called the complexity parameter.  It is
+## used to control when to stop splitting the tree and so save computational time.
+## For example, if a split does not increase the overall R-squared by the
+## complexity parameter it is not considered any further, as chances are that the
+## tree will be pruned at this point through the use of cross-validation.
+## ")
+
+## evaluateRisk(pr, ac) %>%
+##   tibble::rownames_to_column("Complexity") %>%
+##   mutate(Complexity=as.numeric(Complexity)) %>%
+##   '*'(100) %>%
+##   round(0) %>%
+##   print()
+
+# Display the risk chart.
+
 ask_continue()
 
 inform_about("Risk Chart",
@@ -193,25 +226,6 @@ The more area under the curve the better the model performance. A perfect
 model would follow the grey line. The Precision line represents
 the lift offered by the model, with the lift values on the right hand axis.
 ")
-
-ev$Actual %>%
-  as.integer() %>%
-  subtract(1) ->
-ac
-
-ds %>%
-  predict(model, newdata=., type="prob") %>%
-  as.data.frame() %>%
-  '['(,2) ->
-pr
-
-## evaluateRisk(pr, ac) %>%
-##   rownames_to_column("Complexity") %>%
-##   mutate(Complexity=as.numeric(Complexity)) %>%
-##   round(2) %>%
-##   print()
-
-# Display the risk chart.
 
 fname <- "rain_dt_riskchart.pdf"
 pdf(file=fname, width=5, height=5)
