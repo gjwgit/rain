@@ -7,8 +7,9 @@ predictive model for the probability of it raining tomorrow based on
 today's weather observations. The training dataset consists of daily
 weather observations from weather stations across Australia capturing
 the amount of sunshine, the humidity, the amount of rain, etc. Models
-available include decision tree ([rain](rain.md)) and random forest
-([rainrf](rainrf.md)).
+available include decision tree
+([rain](https://github.com/gjwgit/rain/rain_dt.md)) and random forest
+([rainrf](https://github.com/gjwgit/rain/rain_rf.md)).
 
 These models come from the Essentials of Data Science by Graham
 Williams <https://bit.ly/essentials_data_science>. Further support
@@ -26,16 +27,16 @@ Usage
   $ pip3 install mlhub
   ```
 
-- To install and configure the rain (or rainrf) pre-built model:
+- To install and configure the rain_dt (or rain_rf) pre-built model:
 
   ```shell
-  $ ml install   rain
-  $ ml configure rain
+  $ ml install   rain_dt
+  $ ml configure rain_dt
   ```
 
 Demonstration
 -------------
 
 ```console
-$ ml demo azanomaly
+$ ml demo rain_dt
 ```
