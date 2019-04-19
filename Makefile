@@ -29,7 +29,7 @@ $(MODEL)_rpart_model.RData: train.R
 	Rscript $<
 
 clean::
-	rm -rf README.txt dtree.pdf varimp.pdf
+	rm -rf rain_dt_model.pdf rain_dt_varimp.pdf
+	rm -rf rain_dt_riskchart.pdf rain_dt_model.pdf
 
 realclean:: clean
-	rm -f rain_rpart_riskchart.pdf rpart_model.pdf
