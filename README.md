@@ -8,8 +8,8 @@ today's weather observations. The training dataset consists of daily
 weather observations from weather stations across Australia capturing
 the amount of sunshine, the humidity, the amount of rain, etc. Models
 available include decision tree
-([rain](https://github.com/gjwgit/rain/rain_dt.md)) and random forest
-([rainrf](https://github.com/gjwgit/rain/rain_rf.md)).
+([rain_dt](https://github.com/gjwgit/rain/blob/master/rain_dt.md)) and random forest
+([rain_rf](https://github.com/gjwgit/rain/blob/master/rain_rf.md)).
 
 These models come from the Essentials of Data Science by Graham
 Williams <https://bit.ly/essentials_data_science>. Further support

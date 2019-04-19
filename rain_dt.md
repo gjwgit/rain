@@ -14,17 +14,17 @@ This model comes from the Essentials of Data Science by Graham Williams
 also available from <https://essentials.togaware.com/>.
 
 A more complex random forest model,
-[rainrf](https://github.com/gjwgit/rain/rainrf.md), is also available
+[rain_rf](https://github.com/gjwgit/rain/blob/master/rain_rf.md), is also available
 for this same task.
 
 Visit the github repository for more details:
-<https://github.com/gjwgit/rain/raindt.md>
+<https://github.com/gjwgit/rain/master/blob/rain_dt.md>
 
 Usage
 -----
 
 To install and run the pre-built model:
 
-    $ ml install gjwgit/rain:raindt.yaml
-    $ ml configure rain
-    $ ml demo rain
+    $ ml install gjwgit/rain:rain_dt.yaml
+    $ ml configure rain_dt
+    $ ml demo rain_dt
