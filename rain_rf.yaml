@@ -25,7 +25,7 @@ dependencies :
     - rpart.plot
   files:
     - https://access.togaware.com/rain_rf_model.RData
-    - demo_rf.R: demo.R
+    - rain_rf.R: demo.R
     - rain_rf.md: README.md
 commands:
   demo   : Run the model and present performance metrics.
