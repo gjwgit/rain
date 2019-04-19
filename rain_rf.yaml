@@ -3,7 +3,7 @@ meta:
   name         : rain_rf
   title        : Predict rain tomorrow using a random forest model.
   keywords     : r, prediction, classification, random forest, introductory, weather, climate
-  version      : 2.0.0
+  version      : 2.0.1
   languages    : R
   modeller     : rpart
   type         : random forest
