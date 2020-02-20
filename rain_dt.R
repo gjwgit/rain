@@ -110,7 +110,7 @@ pdf(fname)
 print(ggVarImp(model))
 invisible(dev.off())
 
-preview_file(fname)
+mlpreview(fname)
 
 #-----------------------------------------------------------------------
 # Explore the model itself - Textual Decision Tree
@@ -145,7 +145,7 @@ pdf(fname)
 fancyRpartPlot(model, sub="")
 invisible(dev.off())
 
-preview_file(fname)
+mlpreview(fname)
 
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
@@ -237,5 +237,5 @@ riskchart(pr, ac,
           legend.horiz=FALSE) %>% print()
 invisible(dev.off())
 
-preview_file(fname)
+mlpreview(fname)
 
