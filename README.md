@@ -15,6 +15,9 @@ These models come from the Essentials of Data Science by Graham
 Williams <https://bit.ly/essentials_data_science>. Further support
 material is also available from <https://essentials.togaware.com/>.
 
+This repository provides an example of how to host multiple MLHub
+packages within a single repository.
+
 Visit the github repository for more details:
 <https://github.com/gjwgit/rain>
 
