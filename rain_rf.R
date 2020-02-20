@@ -5,7 +5,7 @@
 
 library(mlhub)
 
-inform_about("Predict Rain Tomorrow",
+mlcat("Predict Rain Tomorrow",
 "Below we show the predictions after applying the pre-built decision tree
 model to a random subset of a dataset of previously unseen daily observations.
 This provides an insight into the performance of the model.
@@ -63,9 +63,9 @@ ev
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
 
-ask_continue()
+mlask()
 
-inform_about("Confusion Matrix",
+mlcat("Confusion Matrix",
 "A confusion matrix summarises the performance of the model on this evluation
 dataset. All figures in the table are percentages and are calculated across
 the predicitions made by the model for each observation and compared to the
@@ -90,9 +90,9 @@ cat(sprintf("Average class error: %.0f%%\n", mean(per[,"Error"], na.rm=TRUE)))
 
 # Calculate data for the risk chart.
 
-ask_continue()
+mlask()
 
-inform_about("Risk Chart",
+mlcat("Risk Chart",
 "A risk chart presents a cumulative performance view of the model.
 
 The x-axis is the days sorted (left to right) from the highest probability
@@ -136,5 +136,5 @@ riskchart(pr, ac,
           legend.horiz=FALSE) %>% print()
 invisible(dev.off())
 
-preview_file(fname)
+mlpreview(fname)
 
