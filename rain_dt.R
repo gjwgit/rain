@@ -5,7 +5,7 @@
 
 library(mlhub)
 
-inform_about("Predict Rain Tomorrow",
+mlcat("Predict Rain Tomorrow",
 "Below we show the predictions after applying the pre-built decision tree
 model to a random subset of a dataset of previously unseen daily observations.
 This provides an insight into the performance of the model.
@@ -64,9 +64,9 @@ ev
 # Explore the model itself - Variable Importance
 #-----------------------------------------------------------------------
 
-ask_continue()
+mlask()
 
-inform_about("Variable Importance",
+mlcat("Variable Importance",
 "One aspect of understanding the data and models that we build is what
 variables play the most significant role in predicting the outcome.
 
@@ -98,9 +98,9 @@ print(varimp[varimp>0])
 # Explore the model itself - Visual Variable Importance
 #-----------------------------------------------------------------------
 
-ask_continue()
+mlask()
 
-inform_about("Visual Variable Importance",
+mlcat("Visual Variable Importance",
 "An understanding of the relative importance of each of the variables
 adds further insight into the data.
 ")
@@ -116,9 +116,9 @@ preview_file(fname)
 # Explore the model itself - Textual Decision Tree
 #-----------------------------------------------------------------------
 
-ask_continue()
+mlask()
 
-inform_about("Actual Decision Tree",
+mlcat("Actual Decision Tree",
 "The line begining with 'node)' is a legend. Split is a test, n observations,
 loss is the error, yval the majority class, and yprob is class probability.
 ")
@@ -129,9 +129,9 @@ print(model)
 # Explore the model itself - Visual Decision Tree
 #-----------------------------------------------------------------------
 
-ask_continue()
+mlask()
 
-inform_about("Visual Decision Tree",
+mlcat("Visual Decision Tree",
 "A visual representation of a model can often be more insightful
 than the printed textual representation. For a decision tree
 model, representing the discovered knowledge as a decision tree, we
@@ -151,9 +151,9 @@ preview_file(fname)
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
 
-ask_continue()
+mlask()
 
-inform_about("Confusion Matrix",
+mlcat("Confusion Matrix",
 "A confusion matrix summarises the performance of the model on this evluation
 dataset. All figures in the table are percentages and are calculated across
 the predicitions made by the model for each observation and compared to the
@@ -189,11 +189,11 @@ ds %>%
   '['(,2) ->
 pr
 
-## ask_continue()
+## mlask()
 
 ## Remove for now until better explained.
 
-## inform_about("Complexity Tuning",
+## mlcat("Complexity Tuning",
 ## "A decision tree model has a paramter called the complexity parameter.  It is
 ## used to control when to stop splitting the tree and so save computational time.
 ## For example, if a split does not increase the overall R-squared by the
@@ -210,9 +210,9 @@ pr
 
 # Display the risk chart.
 
-ask_continue()
+mlask()
 
-inform_about("Risk Chart",
+mlcat("Risk Chart",
 "A risk chart presents a cumulative performance view of the model.
 
 The x-axis is the days sorted (left to right) from the highest probability
