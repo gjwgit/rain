@@ -8,9 +8,9 @@ today's weather observations. The training dataset consists of daily
 weather observations from weather stations across Australia capturing
 the amount of sunshine, the humidity, the amount of rain, etc. This
 default model using the decision tree induction algorithm to build a
-model that is represented as a decision tree. Other models include
-decision a random forest which builds a forest of decision trees as an
-ensemble type model
+model that is represented as a decision tree. Other models include a
+random forest which builds a forest of decision trees as an ensemble
+type model
 ([rain_rf](https://github.com/gjwgit/rain/docs/blob/master/rainrf.md)).
 
 These models come from the Essentials of Data Science by Graham
