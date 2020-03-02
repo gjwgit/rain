@@ -21,9 +21,11 @@ model.")
 mlask()
 
 mlcat("Predict Rain Tomorrow",
-"Below we show the predictions after applying the pre-built decision tree
-model to a random subset of a dataset of previously unseen daily observations.
-This provides an insight into the performance of the model whic is moderately
+"Below we show the predictions, that are being made as you read this, after
+applying the pre-built decision tree model to a random subset of a dataset
+of previously unseen daily observations.
+
+This provides an insight into the performance of the model which is moderately
 okay based on this data. Note the highlighted errors. No model is perfect.
 ")
 
