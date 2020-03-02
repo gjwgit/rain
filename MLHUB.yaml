@@ -1,6 +1,6 @@
 --- # RAIN
 meta:
-  name         : rain_dt
+  name         : rain
   title        : Predict rain tomorrow using a decision tree model.
   keywords     : r, prediction, classification, decision tree, introductory, weather, climate
   version      : 4.0.7
@@ -12,7 +12,6 @@ meta:
   author       : Graham.Williams@togaware.com
   maintainer   : Graham.Williams@togaware.com
   url          : https://github.com/gjwgit/rain
-  yaml         : gjwgit/rain:rain_dt.yaml
 dependencies :
   system:
     - atril       # For viewing generated PDF plots
@@ -25,9 +24,9 @@ dependencies :
     - rpart.plot
     - tibble
   files:
-    - rain_dt_model.RData
-    - rain_dt.R: demo.R
-    - rain_dt.md: README.md
+    - rain_model.RData
+    - docs/README.md
+    - demo.R
     - score.R
 commands:
   demo   : Run the model and present performance metrics.
