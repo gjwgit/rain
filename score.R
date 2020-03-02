@@ -31,7 +31,7 @@ ds %<>%
 
 names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
 
-load("rain_rpart_model.RData")
+load("rain_model.RData")
 
 cat("
 ==========================================
