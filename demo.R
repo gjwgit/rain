@@ -5,10 +5,26 @@
 
 library(mlhub)
 
+mlcat("Model to Predict Rain Tomorrow - Decision Tree",
+"The prebuilt decision tree based model illustrates the simplicity with which
+AI models can be built from historic data and deployed to provide some degree
+of accuracy in their prediction. The model here is based on a dataset from a
+particular collection of locations over several years. How well it performs
+is dependent on the training data and the locations at which the model is
+deployed.
+
+The purpose here is to illustrate the process of revieing the performance of the
+pre-built model. You might find it useful to review the rainrf model too, which
+provides a pre-built random forest which is considerably more accurate than this
+model.")
+
+mlask()
+
 mlcat("Predict Rain Tomorrow",
 "Below we show the predictions after applying the pre-built decision tree
 model to a random subset of a dataset of previously unseen daily observations.
-This provides an insight into the performance of the model.
+This provides an insight into the performance of the model whic is moderately
+okay based on this data. Note the highlighted errors. No model is perfect.
 ")
 
 # Load required packages.
@@ -28,7 +44,7 @@ suppressMessages(
 # Load the pre-built model.
 #-----------------------------------------------------------------------
 
-load("rain_dt_model.RData")
+load("rain_model.RData")
 
 set.seed(42354)
 
@@ -73,6 +89,9 @@ variables play the most significant role in predicting the outcome.
 We first list the variables that are actually found by the algorithm
 to be effective in the model. Then we list all the variables and report
 their relative importance in predicting the outcome.
+
+When Enter is pressed a plot of the same data is presented. A visual
+presentation can often be more effective.
 ")
 
 # The following code based on rpart::printcp()
@@ -100,17 +119,12 @@ print(varimp[varimp>0])
 
 mlask()
 
-mlcat("Visual Variable Importance",
-"An understanding of the relative importance of each of the variables
-adds further insight into the data.
-")
-  
 fname <- "rain_dt_varimp.pdf"
 pdf(fname)
 print(ggVarImp(model))
 invisible(dev.off())
 
-mlpreview(fname)
+mlpreview(fname, begin="")
 
 #-----------------------------------------------------------------------
 # Explore the model itself - Textual Decision Tree
@@ -119,8 +133,16 @@ mlpreview(fname)
 mlask()
 
 mlcat("Actual Decision Tree",
-"The line begining with 'node)' is a legend. Split is a test, n observations,
-loss is the error, yval the majority class, and yprob is class probability.
+"We often want to gain insight into the models that the artificial intelligence
+builds. Below is a text representation of the decision tree model that the
+decision tree algorithm has built based on the training data provided to the
+algorithm.
+
+The first line reports the number of observations in the training dataset.
+The line begining with 'node)' is a legend. Split is a test condition, n is the
+number of observations that have made there way to this node, the loss is the
+error in the prediction at this node, the yval the majority class (i.e., the
+prediction), and yprob is class probability.
 ")
 
 print(model)
@@ -137,15 +159,16 @@ than the printed textual representation. For a decision tree
 model, representing the discovered knowledge as a decision tree, we
 read the tree from top to bottom, traversing the path corresponding
 to the answer to the question presented at each node. The leaf node
-has the final decision together with the class probabilities.
-")
+has the final decision together with the class probabilities.")
+
+mlask()
 
 fname <- "rain_dt_model.pdf"
 pdf(fname)
 fancyRpartPlot(model, sub="")
 invisible(dev.off())
 
-mlpreview(fname)
+mlpreview(fname, begin="")
 
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
@@ -238,4 +261,5 @@ riskchart(pr, ac,
 invisible(dev.off())
 
 mlpreview(fname)
+cat("\n")
 
