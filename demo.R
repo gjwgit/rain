@@ -64,10 +64,10 @@ ds %<>%
 
 names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
 
-ds %>% filter(target == "Yes") %>% sample_n(10) -> dsy
-ds %>% filter(target == "No") %>% sample_n(10) -> dsn
+#ds %>% filter(target == "Yes") %>% sample_n(100) -> dsy
+#ds %>% filter(target == "No") %>% sample_n(10000) -> dsn
 
-ds <- rbind(dsn, dsy)
+#ds <- rbind(dsn, dsy)
 
 ds %>%
   predict(model, newdata=., type="class") %>%
