@@ -238,7 +238,7 @@ tprint <- model$functions$summary(tmp, ff$dev[rows], ff$wt[rows], ylevel, digits
 
 i <- rows[node]
 nn <- ff$n[i]
-cat("\nNode number ", id[i], ": ", nn, " observations", sep = "")
+cat("Node number ", id[i], ": ", nn, " observations", sep = "")
 if (ff$complexity[i] < cp || is.leaf[i]) cat("\n") else
   cat(",    complexity param=", format(signif(ff$complexity[i], 
                                               digits)), "\n", sep = "")
@@ -284,8 +284,6 @@ if (ff$complexity[i] > cp && !is.leaf[i]) {
         sep = "\n")
   }
 }
-cat("\n")
-
 
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
