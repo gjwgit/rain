@@ -80,6 +80,50 @@ ds %>%
 ev
 
 #-----------------------------------------------------------------------
+# Explore the model itself - Textual Decision Tree
+#-----------------------------------------------------------------------
+
+mlask(end="")
+
+mlcat("Actual Decision Tree",
+"We often want to gain insight into the models that the artificial intelligence
+builds. Below is a text representation of the decision tree model that the
+decision tree algorithm has built based on the training data provided to the
+algorithm.
+
+The first line reports the number of observations in the training dataset.
+The line begining with 'node)' is a legend. Split is a test condition, n is the
+number of observations that have made there way to this node, the loss is the
+error in the prediction at this node, the yval the majority class (i.e., the
+prediction), and yprob is class probability.
+")
+
+print(model)
+
+#-----------------------------------------------------------------------
+# Explore the model itself - Visual Decision Tree
+#-----------------------------------------------------------------------
+
+mlask(end="")
+
+mlcat("Visual Decision Tree",
+"A visual representation of a model can often be more insightful
+than the printed textual representation. For a decision tree
+model, representing the discovered knowledge as a decision tree, we
+read the tree from top to bottom, traversing the path corresponding
+to the answer to the question presented at each node. The leaf node
+has the final decision together with the class probabilities.")
+
+mlask(end="")
+
+fname <- "rain_dt_model.pdf"
+pdf(fname)
+fancyRpartPlot(model, sub="")
+invisible(dev.off())
+
+mlpreview(fname, begin="")
+
+#-----------------------------------------------------------------------
 # Explore the model itself - Variable Importance
 #-----------------------------------------------------------------------
 
@@ -242,50 +286,6 @@ if (ff$complexity[i] > cp && !is.leaf[i]) {
 }
 cat("\n")
 
-
-#-----------------------------------------------------------------------
-# Explore the model itself - Textual Decision Tree
-#-----------------------------------------------------------------------
-
-mlask(end="")
-
-mlcat("Actual Decision Tree",
-"We often want to gain insight into the models that the artificial intelligence
-builds. Below is a text representation of the decision tree model that the
-decision tree algorithm has built based on the training data provided to the
-algorithm.
-
-The first line reports the number of observations in the training dataset.
-The line begining with 'node)' is a legend. Split is a test condition, n is the
-number of observations that have made there way to this node, the loss is the
-error in the prediction at this node, the yval the majority class (i.e., the
-prediction), and yprob is class probability.
-")
-
-print(model)
-
-#-----------------------------------------------------------------------
-# Explore the model itself - Visual Decision Tree
-#-----------------------------------------------------------------------
-
-mlask(end="")
-
-mlcat("Visual Decision Tree",
-"A visual representation of a model can often be more insightful
-than the printed textual representation. For a decision tree
-model, representing the discovered knowledge as a decision tree, we
-read the tree from top to bottom, traversing the path corresponding
-to the answer to the question presented at each node. The leaf node
-has the final decision together with the class probabilities.")
-
-mlask(end="")
-
-fname <- "rain_dt_model.pdf"
-pdf(fname)
-fancyRpartPlot(model, sub="")
-invisible(dev.off())
-
-mlpreview(fname, begin="")
 
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
