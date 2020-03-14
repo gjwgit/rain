@@ -18,7 +18,7 @@ of the pre-built model. You might find it useful to review MLHub's rainrf
 model too, which provides a pre-built random forest which is considerably
 more accurate than this model.")
 
-mlask(end="")
+mlask()
 
 mlcat("Predict Rain Tomorrow",
 "Below we show the predictions, that are being computed right now. The
@@ -83,7 +83,7 @@ ev
 # Explore the model itself - Textual Decision Tree
 #-----------------------------------------------------------------------
 
-mlask(end="")
+mlask()
 
 mlcat("Actual Decision Tree",
 "We often want to gain insight into the models that the artificial intelligence
@@ -104,7 +104,7 @@ print(model)
 # Explore the model itself - Visual Decision Tree
 #-----------------------------------------------------------------------
 
-mlask(end="")
+mlask()
 
 mlcat("Visual Decision Tree",
 "A visual representation of a model can often be more insightful
@@ -114,7 +114,7 @@ read the tree from top to bottom, traversing the path corresponding
 to the answer to the question presented at each node. The leaf node
 has the final decision together with the class probabilities.")
 
-mlask(end="")
+mlask()
 
 fname <- "rain_dt_model.pdf"
 pdf(fname)
@@ -164,7 +164,7 @@ print(varimp[varimp>0])
 # Explore the model itself - Visual Variable Importance
 #-----------------------------------------------------------------------
 
-mlask(end="")
+mlask()
 
 fname <- "rain_dt_varimp.pdf"
 pdf(fname)
@@ -177,7 +177,7 @@ mlpreview(fname, begin="")
 # Variable Selection
 #-----------------------------------------------------------------------
 
-mlask(end="")
+mlask()
 
 mlcat("Variable Selection",
 "When the model was built, the algorithm chooses a variable for each node
@@ -191,7 +191,7 @@ tree (Node Number 1). A number of variables were considered and the variable
 with the top score was chosen for this node. The improve= is the value
 of the calculation.")
 
-mlask(end="")
+mlask()
 
 # The following code based on rpart:::summary.rpart()
 # Copyright (c) Brian Ripley
@@ -291,7 +291,7 @@ cat("\n")
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
 
-mlask(end="")
+mlask()
 
 mlcat("Confusion Matrix",
 "A confusion matrix summarises the performance of the model on this evluation
@@ -350,7 +350,7 @@ pr
 
 # Display the risk chart.
 
-mlask(end="")
+mlask()
 
 mlcat("Risk Chart",
 "A risk chart presents a cumulative performance view of the model.
