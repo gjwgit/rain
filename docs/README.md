@@ -92,72 +92,6 @@ model is perfect.
 
 Press Enter to continue: 
 
-===================
-Variable Importance
-===================
-
-One aspect of understanding the data and models that we build is what
-variables play the most significant role in predicting the outcome.
-
-We first list the variables that are actually found by the algorithm
-to be effective in the model. Then we list all the variables and report
-their relative importance in predicting the outcome.
-
-When you press the Enter key below, a plot of the same data is presented.
-A visual presentation can often be more effective.
-
-Variables Used:  humidity_3pm, pressure_3pm, sunshine.
-
-Relative Importance of Variables:
-
-humidity_3pm     sunshine     temp_3pm     max_temp pressure_3pm humidity_9am 
-          56           10            7            6            6            5 
-pressure_9am    cloud_9am     rainfall     temp_9am     min_temp 
-           4            2            1            1            1 
-
-Press Enter to continue: 
-
-Close the graphic window using Ctrl-w.
-
-Press Enter to continue: 
-```
-![](rain_dt_varimp.png)
-
-```console
-==================
-Variable Selection
-==================
-
-When the model was built, the algorithm chooses a variable for each node
-of the resulting decision tree. An entropy, information theory or gini
-based calculation is performed to choose the variable. The variable with
-the highest value according to this measure is chosen for the particular
-node.
-
-Below we can see the calculations that were made for the root node of the
-tree (Node Number 1).
-
-Press Enter to continue: 
-
-Node number 1: 142240 observations,    complexity param=0.3559
-  predicted class=No   expected loss=0.4  P(node) =1
-    class counts: 110992 31248
-   probabilities: 0.600 0.400 
-  left son=2 (109682 obs) right son=3 (32558 obs)
-  Primary splits:
-      humidity_3pm < 66.5  to the left,  improve=13900, (3568 missing)
-      rainfall     < 0.35  to the left,  improve= 8792, (1410 missing)
-      rain_today   splits as  LR,        improve= 8388, (1410 missing)
-      sunshine     < 7.75  to the right, improve= 7628, (68769 missing)
-      cloud_3pm    < 5.5   to the left,  improve= 6538, (58180 missing)
-  Surrogate splits:
-      temp_3pm     < 11.95 to the right, agree=0.786, adj=0.075, (826 split)
-      humidity_9am < 90.5  to the left,  agree=0.783, adj=0.059, (2317 split)
-      max_temp     < 12.55 to the right, agree=0.779, adj=0.046, (340 split)
-      rainfall     < 6.05  to the left,  agree=0.774, adj=0.022, (80 split)
-
-Press Enter to continue: 
-
 ====================
 Actual Decision Tree
 ====================
@@ -206,6 +140,77 @@ Press Enter to continue:
 Close the graphic window using Ctrl-w.
 ```
 ![](rain_dt_plot.png)
+
+```console
+Press Enter to continue: 
+
+===================
+Variable Importance
+===================
+
+One aspect of understanding the data and models that we build is what
+variables play the most significant role in predicting the outcome.
+
+We first list the variables that are actually found by the algorithm
+to be effective in the model. Then we list all the variables and report
+their relative importance in predicting the outcome.
+
+When you press the Enter key below, a plot of the same data is presented.
+A visual presentation can often be more effective.
+
+Variables Used:  humidity_3pm, pressure_3pm, sunshine.
+
+Relative Importance of Variables:
+
+humidity_3pm     sunshine     temp_3pm     max_temp pressure_3pm humidity_9am 
+          56           10            7            6            6            5 
+pressure_9am    cloud_9am     rainfall     temp_9am     min_temp 
+           4            2            1            1            1 
+
+Press Enter to continue: 
+
+Close the graphic window using Ctrl-w.
+```
+![](rain_dt_varimp.png)
+
+```console
+
+Press Enter to continue: 
+
+==================
+Variable Selection
+==================
+
+When the model was built, the algorithm chooses a variable for each node
+of the resulting decision tree. An entropy, information theory or gini
+based calculation is performed to choose the variable. The variable with
+the highest value according to this measure is chosen for the particular
+node.
+
+Below we can see the calculations that were made for the root node of the
+tree (Node Number 1).
+
+Press Enter to continue: 
+
+Node number 1: 142240 observations,    complexity param=0.3559
+  predicted class=No   expected loss=0.4  P(node) =1
+    class counts: 110992 31248
+   probabilities: 0.600 0.400 
+  left son=2 (109682 obs) right son=3 (32558 obs)
+  Primary splits:
+      humidity_3pm < 66.5  to the left,  improve=13900, (3568 missing)
+      rainfall     < 0.35  to the left,  improve= 8792, (1410 missing)
+      rain_today   splits as  LR,        improve= 8388, (1410 missing)
+      sunshine     < 7.75  to the right, improve= 7628, (68769 missing)
+      cloud_3pm    < 5.5   to the left,  improve= 6538, (58180 missing)
+  Surrogate splits:
+      temp_3pm     < 11.95 to the right, agree=0.786, adj=0.075, (826 split)
+      humidity_9am < 90.5  to the left,  agree=0.783, adj=0.059, (2317 split)
+      max_temp     < 12.55 to the right, agree=0.779, adj=0.046, (340 split)
+      rainfall     < 6.05  to the left,  agree=0.774, adj=0.022, (80 split)
+
+Press Enter to continue: 
+
 ```console
 Press Enter to continue: 
 
