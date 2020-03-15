@@ -245,14 +245,16 @@ Risk Chart
 
 A risk chart presents a cumulative performance view of the model.
 
-The x-axis is the days sorted (left to right) from the highest probability
-of rain tomorrow to the lowest probability of rain tomorrow.
+The x-axis can be thought of as the days across the dataset, but sorting
+(left to right) to days from the highest probability of rain tomorrow on the
+left to the lowest probability of rain tomorrow on the right.
 
-The y-axis is the expected performance of the model in predicting rain. It is
-the percentage of the known days on which it rains that are predicted by the
-model for thected performance of the model in predicting rain. It is
-the percentage of the known days on which it rains that are predicted by the
-model for the given recall (x-axis).
+The y-axis is then the performance of the model in predicting whether it will
+rain tomorrow. It is the percentage of the actual days on which it rains that
+are predicted by the model as raining tomorrow. Thus, 100% (at the top) 
+covers all days on which it rains. For the top 20% of the days with the
+highest probability of rain tomorrow (Caseload = 20%), some 54% of the actual
+days for which it rained are predicted by the model.
 
 The more area under the curve the better the model performance. A perfect
 model would follow the grey line. The Precision line represents
