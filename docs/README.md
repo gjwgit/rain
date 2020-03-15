@@ -39,6 +39,8 @@ $ ml configure
 ```console
 $ ml install rain
 $ ml configure rain
+$ ml readme rain
+$ ml commands rain
 $ ml demo rain
 ```
 
