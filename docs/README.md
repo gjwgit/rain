@@ -12,7 +12,7 @@ algorithm to build a model that is represented as a decision
 tree. Other (often more accurate but more complex) models include the
 random forest which builds a forest (i.e., a collection) of decision
 trees and produces an ensemble type model
-([rainrf](https://github.com/gjwgit/rain/docs/blob/master/rainrf.md)).
+([rainrf](https://github.com/gjwgit/rain/blob/master/docs/rainrf.md)).
 Ensembles have been shown over many years to produce more accurate
 models (see, for example, the original work on [multiple inductive
 learning](http://togaware.com/papers/milai87.pdf)).
