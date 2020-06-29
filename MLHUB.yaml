@@ -1,33 +1,25 @@
 --- # RAIN
 meta:
   name         : rain
-  title        : Predict rain tomorrow using decision tree and random forest.
-  keywords     : r, prediction, classification, decision tree, introductory, weather, climate
+  title        : Predict if it will rain tomorrow (decision tree and random forest).
+  keywords     : r, prediction, classification, decision tree, introductory, weather, climate, random forest
   version      : 4.2.3
   languages    : R
-  modeller     : rpart
-  type         : decision tree
   display      : demo
   license      : gpl3
   author       : Graham.Williams@togaware.com
-  maintainer   : Graham.Williams@togaware.com
   url          : https://github.com/gjwgit/rain
 dependencies :
-  system:
-    - atril       # For viewing generated PDF plots
   cran:
     - rpart
     - magrittr
     - dplyr
     - tidyr
-    - rattle=5.2.0
+    - rattle
     - rpart.plot
     - tibble
   files:
-    - rain_dt_model.RData
     - docs/README.md
     - demo.R
-    - score.R
 commands:
   demo   : Run the model and present performance metrics.
-  score  : Predict rain tomorrow on your data.
