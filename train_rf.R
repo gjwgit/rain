@@ -23,9 +23,16 @@ ds %<>%
 
 names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
 
+# Select a sample dataset.
+
+ds %<>% sample_frac(0.7)
+
 cat("\n===========================\nBuild a Random Forest Model\n===========================\n\n")
 
-model <- randomForest(target ~ ., data=ds, na.action=na.roughfix)
+model <- randomForest(target ~ .,
+                      data=ds,
+                      importance=TRUE,
+                      na.action=na.roughfix)
 
 cat("====================\nModel Saved as RData\n====================\n\n")
 
