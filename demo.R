@@ -114,6 +114,8 @@ ds[tr,vars] %>%
   rpart(form, ., parms=list(prior=c(0.6, 0.4))) ->
 model
 
+save(model, file="rain_rpart_model.RData")
+
 #-----------------------------------------------------------------------
 # Explore the model - Textual Decision Tree
 #-----------------------------------------------------------------------
