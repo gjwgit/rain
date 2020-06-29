@@ -3,32 +3,19 @@
 #
 # Copyright 2018-2020 Graham.Williams@togaware.com
 
+library(glue)        # Format strings: glue().
 library(mlhub)
 
 mlcat("Model to Predict Rain Tomorrow - Decision Tree",
-"This prebuilt decision tree based model illustrates the simplicity with which
-AI models can be built from historic data and deployed to provide some degree
+"AI models can be built from historic data and deployed to provide some degree
 of accuracy in their prediction. The model here is based on a dataset from a
 collection of weather observations at different locations over several years.
 How well it performs is dependent on the training data and the locations at
-which the model is to be deployed.
+which the model is to be deployed.")
 
-The purpose here is to illustrate the process of reviewing the performance
-of the pre-built model. You might find it useful to review MLHub's rainrf
-model too, which provides a pre-built random forest which is considerably
-more accurate than this model.")
-
-mlask()
-
-mlcat("Predict Rain Tomorrow",
-"Below we show the predictions, that are being computed right now. The
-pre-built decision tree model is being applied to a random subset of a
-dataset of previously unseen daily observations.
-
-This provides an insight into the performance of the model. The performance
-here is just okay based on this datasate. Note the highlighted errors. No
-model is perfect.
-")
+#-----------------------------------------------------------------------
+# Setup
+#-----------------------------------------------------------------------
 
 # Load required packages.
 
@@ -43,15 +30,21 @@ suppressMessages(
   library(tibble)
 })
 
+mlask()
+
 #-----------------------------------------------------------------------
-# Load the pre-built model.
+# Fit the Model
 #-----------------------------------------------------------------------
 
-load("rain_dt_model.RData")
+mlcat("Fit the Model",
+"Given historic data which records the outcome we wish to predict we can
+fit a model based on that data so as to predict the outcome for new data.
+For our purposes any dataset in a CSV file where the first row contains the
+header, naming each variable, can be used to fit a model. One column
+needs to be named 'target' and the other columns will be used to fit a model
+to predict the 'target' column.
 
-set.seed(42354)
-
-# Load a sample dataset, predict, and display a sample of predictions.
+The model is currently being built...", end="")
 
 dsname <- "weatherAUS"
 ds     <- get(dsname)
@@ -64,34 +57,22 @@ ds %<>%
 
 names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
 
-#ds %>% filter(target == "Yes") %>% sample_n(100) -> dsy
-#ds %>% filter(target == "No") %>% sample_n(10000) -> dsn
-
-#ds <- rbind(dsn, dsy)
-
-ds %>%
-  predict(model, newdata=., type="class") %>%
-  as.data.frame() %>%
-  cbind(Actual=ds$target) %>%
-  set_names(c("Predicted", "Actual")) %>%
-  select(Actual, Predicted) %>%
-  mutate(Error=ifelse(Predicted==Actual, "", "<----")) %T>%
-  {sample_n(., 12) %>% print()} ->
-ev
+model <- rpart(target ~ ., data=ds, parms=list(prior=c(0.6, 0.4)))
 
 #-----------------------------------------------------------------------
-# Explore the model itself - Textual Decision Tree
+# Explore the model - Textual Decision Tree
 #-----------------------------------------------------------------------
 
-mlask()
+mlask(begin="\n\n")
 
-mlcat("Actual Decision Tree",
-"We often want to gain insight into the models that the artificial intelligence
-builds. Below is a text representation of the decision tree model that the
-decision tree algorithm has built based on the training data provided to the
-algorithm.
+mlcat("Display the Decision Tree",
+"An AI model targets a specific knowledge respresentation langauge.
+Here the knowledge is represented as a decision tree.
+We can gain insight into the model through  a textual representation of the
+decision tree as below.
 
-The first line reports the number of observations in the training dataset.
+The first line in the description
+reports the number of observations in the training dataset.
 The line begining with 'node)' is a legend. Split is a test condition, n is the
 number of observations that have made there way to this node, the loss is the
 error in the prediction at this node, the yval the majority class (i.e., the
@@ -101,16 +82,17 @@ prediction), and yprob is class probability.
 print(model)
 
 #-----------------------------------------------------------------------
-# Explore the model itself - Visual Decision Tree
+# Explore the model - Visual Decision Tree
 #-----------------------------------------------------------------------
 
 mlask()
 
 mlcat("Visual Decision Tree",
 "A visual representation of a model can often be more insightful
-than the printed textual representation. For a decision tree
-model, representing the discovered knowledge as a decision tree, we
-read the tree from top to bottom, traversing the path corresponding
+than the printed textual representation.  A decision tree
+model can readily be visualised as a tree structure as we are about to
+display.
+We will read the tree from top to bottom, traversing the path corresponding
 to the answer to the question presented at each node. The leaf node
 has the final decision together with the class probabilities.")
 
@@ -124,7 +106,7 @@ invisible(dev.off())
 mlpreview(fname, begin="")
 
 #-----------------------------------------------------------------------
-# Explore the model itself - Variable Importance
+# Explore the model - Variable Importance
 #-----------------------------------------------------------------------
 
 mlask()
@@ -285,6 +267,26 @@ if (ff$complexity[i] > cp && !is.leaf[i]) {
   }
 }
 
+mlcat("Predicting Rain Tomorrow",
+"Below we show the predictions using the model just built. The
+decision tree model is applied to a random subset of the dataset
+of daily observations.
+
+This provides an insight into the performance of the model. The performance
+here is just okay based on this datasate. Note the highlighted errors. No
+model is perfect.
+", begin="\n", end="\n\n")
+
+ds %>%
+  predict(model, newdata=., type="class") %>%
+  as.data.frame() %>%
+  cbind(Actual=ds$target) %>%
+  set_names(c("Predicted", "Actual")) %>%
+  select(Actual, Predicted) %>%
+  mutate(Error=ifelse(Predicted==Actual, "", "<----")) %T>%
+  {sample_n(., 12) %>% print()} ->
+ev
+
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
 #-----------------------------------------------------------------------
@@ -302,7 +304,7 @@ false positive and true positive rates.
 The Error column calculates the error across each class. We also report the
 overall error which is calculated as the number of errors over the number of
 observations. The average of the class errors is also reported. 
-")
+", end="\n\n")
 
 per <- errorMatrix(ev$Actual, ev$Predicted) %T>% print()
 
