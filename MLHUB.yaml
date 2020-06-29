@@ -24,7 +24,7 @@ dependencies :
     - rpart.plot
     - tibble
   files:
-    - rain_model.RData
+    - rain_dt_model.RData
     - docs/README.md
     - demo.R
     - score.R
