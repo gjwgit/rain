@@ -47,7 +47,7 @@ suppressMessages(
 # Load the pre-built model.
 #-----------------------------------------------------------------------
 
-load("rain_model.RData")
+load("rain_dt_model.RData")
 
 set.seed(42354)
 
