@@ -6,7 +6,11 @@
 library(mlhub)
 
 mlcat("Predict Rain Tomorrow",
-"Below we show the predictions after applying the pre-built decision tree
+"The Random Forest model is currently being loaded. This is quite a large
+model of 500 decision trees and after loading it into memory it can take
+a few seconds to apply the model to a dataset.
+
+Below we show the predictions after applying the pre-built decision tree
 model to a random subset of a dataset of previously unseen daily observations.
 This provides an insight into the performance of the model.
 ")
@@ -44,10 +48,10 @@ ds %<>%
 
 names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
 
-ds %>% filter(target == "Yes") %>% sample_n(10) -> dsy
-ds %>% filter(target == "No") %>% sample_n(10) -> dsn
+#ds %>% filter(target == "Yes") %>% sample_n(10) -> dsy
+#ds %>% filter(target == "No") %>% sample_n(10) -> dsn
 
-ds <- rbind(dsn, dsy)
+#ds <- rbind(dsn, dsy)
 
 ds %>%
   predict(model, newdata=., type="class") %>%
@@ -58,6 +62,30 @@ ds %>%
   mutate(Error=ifelse(Predicted==Actual, "", "<----")) %T>%
   {sample_n(., 12) %>% print()} ->
 ev
+
+# List the importance of the variables.
+
+mlask()
+
+mlcat("Variable Importance",
+"One aspect of understanding the data and models that we build is what
+variables play the most significant role in predicting the outcome.
+
+We list all the variables available and report their relative importance
+in predicting the outcome across several measures.
+
+When you press the Enter key below, a plot of the same data is presented.
+A visual presentation can often be more effective.")
+
+rn <- round(randomForest::importance(model), 2)
+rn[order(rn[,3], decreasing=TRUE),]
+ 
+fname <- "rain_rf_varimp.pdf"
+pdf(file=fname, width=8, height=8)
+p <- ggVarImp(model, log=TRUE)
+print(p)
+invisible(dev.off())
+mlpreview(fname)
 
 #-----------------------------------------------------------------------
 # Produce confusion matrix using Rattle.
@@ -126,7 +154,7 @@ pr
 
 # Display the risk chart.
 
-fname <- "rain_rpart_riskchart.pdf"
+fname <- "rain_rf_riskchart.pdf"
 pdf(file=fname, width=5, height=5)
 riskchart(pr, ac,
           title="Risk Chart for Decision Tree Model",
