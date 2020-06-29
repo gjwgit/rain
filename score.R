@@ -13,7 +13,9 @@
 
 suppressMessages(
 {
+  library(mlhub)
   library(rpart)
+  library(randomForest) # Model: randomForest() na.roughfix() for missing data.
   library(magrittr)
   library(dplyr)
   library(tidyr)
@@ -22,23 +24,32 @@ suppressMessages(
 
 dsname <- "weatherAUS"
 ds     <- get(dsname)
+nobs   <- nrow(ds)
 
-names(ds) %<>% normVarNames()
+vnames        <- names(ds)
+names(ds)    %<>% normVarNames()
+names(vnames) <- names(ds)
 
-ds %<>%
-  select(-date, -location, -risk_mm) %>%
-  drop_na()
+vars   <- names(ds)
+target <- "rain_tomorrow"
+vars   <- c(target, vars) %>% unique() %>% rev()
 
-names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
+for (v in which(sapply(ds, is.factor))) levels(ds[[v]]) %<>% normVarNames()
 
-load("rain_model.RData")
+risk   <- "risk_mm"
+id     <- c("date", "location")
+ignore <- c(risk, id)
+vars   <- setdiff(vars, ignore)
 
-cat("
-==========================================
-Provide values for the following variables
-==========================================
+inputs <- setdiff(vars, target)
 
-")
+form   <- formula(ds[rev(vars)])
+
+ds[vars] <- na.roughfix(ds[vars])
+
+load("rain_dt_model.RData")
+
+mlcat("Provide values for the following variables", end="")
 
 # The following code based on rpart::printcp()
 # Copyright (c) Brian Ripley, GPLv2 License.
@@ -65,10 +76,9 @@ for (i in seq_len(length(used)))
 
 newdata <- ds[1,]
 usedi <- sapply(used, function(x) which(x == names(ds)))
-newdata[1,usedi] <- val
+newdata[1,usedi] <- as.list(val)
 unusedi <- sapply(unused, function(x) which(x == names(ds)))
 newdata[1,unusedi] <- NA
 
-pr <- predict(model, newdata=newdata)[,"Yes"]
-
-cat(sprintf("\nI predict the chance of rain tomorrow to be %2.0f%%.\n", 100*pr))
+pr <- predict(model, newdata=newdata)[,"yes"]
+cat(sprintf("\nI predict the chance of rain tomorrow to be %2.0f%%.\n\n", 100*pr))
