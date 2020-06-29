@@ -22,7 +22,7 @@ dependencies :
   files:
     - docs/README.md
     - demo.R
-    - score.R
+    - predict.R
 commands:
-  demo   : Build a model, display, and present performance metrics.
-  score  : Run the model interactively to predict rain tomorrow.
+  demo    : Build a model, display, and present performance metrics.
+  predict : Run the model interactively to predict rain tomorrow.
