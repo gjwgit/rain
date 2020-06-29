@@ -6,7 +6,7 @@
 library(glue)        # Format strings: glue().
 library(mlhub)
 
-mlcat("Model to Predict Rain Tomorrow - Decision Tree",
+mlcat("Predicting Rain Tomorrow - Decision Tree",
 "AI models can be built from historic data and deployed to provide some degree
 of accuracy in their prediction. The model here is based on a dataset from a
 collection of weather observations at different locations over several years.
@@ -21,43 +21,98 @@ which the model is to be deployed.")
 
 suppressMessages(
 {
-  library(rpart)       # Model: decision tree rpart().
-  library(magrittr)    # Data pipelines: %>% %<>% %T>% equals().
-  library(dplyr)       # Wrangling: tbl_df(), group_by(), print().
+  library(rpart)        # Model: decision tree rpart().
+  library(randomForest) # Model: randomForest() na.roughfix() for missing data.
+  library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
+  library(dplyr)        # Wrangling: tbl_df() group_by() print().
   library(tidyr)
-  library(rattle)      # Support: normVarNames(), riskchart(), errorMatrix().
+  library(rattle)       # Support: normVarNames() riskchart() errorMatrix().
   library(ggplot2)
   library(tibble)
+  library(scales)       # Support: commas(), percent().
 })
 
 mlask()
 
 #-----------------------------------------------------------------------
-# Fit the Model
+# Prepare the data.
 #-----------------------------------------------------------------------
 
-mlcat("Fit the Model",
-"Given historic data which records the outcome we wish to predict we can
-fit a model based on that data so as to predict the outcome for new data.
-For our purposes any dataset in a CSV file where the first row contains the
-header, naming each variable, can be used to fit a model. One column
-needs to be named 'target' and the other columns will be used to fit a model
-to predict the 'target' column.
+mlcat("Prepare the Data",
+"The weatherAUS data comes from the Rattle package (https://rattle.togaware.com).
+It covers some 50 weather stations in Australia with over 10 years of daily
+observations of some 20 variables. The data is loaded, cleansed and wrangled, and
+prepared for modelling, as explained in the OnePageR chapter on data templates:
 
-The model is currently being built...", end="")
+https://onepager.togaware.com/Chapter_Data_Template.html.
+
+A view of the data is shared below.", end="\n\n")
 
 dsname <- "weatherAUS"
 ds     <- get(dsname)
+nobs   <- nrow(ds)
 
-names(ds) %<>% normVarNames()
+vnames        <- names(ds)
+names(ds)    %<>% normVarNames()
+names(vnames) <- names(ds)
 
-ds %<>%
-  select(-date, -location, -risk_mm) %>%
-  drop_na()
+vars   <- names(ds)
+target <- "rain_tomorrow"
+vars   <- c(target, vars) %>% unique() %>% rev()
 
-names(ds)[which(names(ds) == "rain_tomorrow")] <- "target"
+for (v in which(sapply(ds, is.factor))) levels(ds[[v]]) %<>% normVarNames()
 
-model <- rpart(target ~ ., data=ds, parms=list(prior=c(0.6, 0.4)))
+risk   <- "risk_mm"
+id     <- c("date", "location")
+ignore <- c(risk, id)
+vars   <- setdiff(vars, ignore)
+
+inputs <- setdiff(vars, target)
+
+form   <- formula(ds[rev(vars)])
+
+ds[vars] <- na.roughfix(ds[vars])
+
+glimpse(ds)
+
+PTR <- 0.7   # Proportion for training
+PTU <- 0.15  # Proportion for tuning
+PTE <- 0.15  # Proportion for testing
+
+tr     <- sample(nobs, PTR*nobs)
+tu     <- nobs %>% seq_len() %>% setdiff(tr) %>% sample(PTU*nobs)
+te     <- nobs %>% seq_len() %>% setdiff(tr) %>% setdiff(tu)
+
+target.tr <- ds %>% slice(tr) %>% pull(target)
+target.tu <- ds %>% slice(tu) %>% pull(target)
+target.te <- ds %>% slice(te) %>% pull(target)
+
+risk.tr   <- ds %>% slice(tr) %>% pull(risk)
+risk.tu   <- ds %>% slice(tu) %>% pull(risk)
+risk.te   <- ds %>% slice(te) %>% pull(risk)
+
+#-----------------------------------------------------------------------
+# Fit the Model
+#-----------------------------------------------------------------------
+
+mlask()
+
+mlcat("Fit the Model",
+"Given the historic data which records the outcome we wish to predict
+({target}) we can
+fit a model based on that data so as to predict the outcome for new data.
+
+The model will be built on a random sample of {round(PTR*100)}%
+({comma(length(tr))}) of the observations. This is the training dataset.
+
+The model is currently being built...", end="")
+
+mtype <- "rpart"
+mdesc <- "decision tree"
+
+ds[tr,vars] %>%
+  rpart(form, ., parms=list(prior=c(0.6, 0.4))) ->
+model
 
 #-----------------------------------------------------------------------
 # Explore the model - Textual Decision Tree
@@ -67,17 +122,16 @@ mlask(begin="\n\n")
 
 mlcat("Display the Decision Tree",
 "An AI model targets a specific knowledge respresentation langauge.
-Here the knowledge is represented as a decision tree.
+Here the knowledge is represented as a {mdesc}.
 We can gain insight into the model through  a textual representation of the
-decision tree as below.
+{mdesc} as below.
 
 The first line in the description
 reports the number of observations in the training dataset.
 The line begining with 'node)' is a legend. Split is a test condition, n is the
 number of observations that have made there way to this node, the loss is the
 error in the prediction at this node, the yval the majority class (i.e., the
-prediction), and yprob is class probability.
-")
+prediction), and yprob is class probability.", end="\n\n")
 
 print(model)
 
@@ -90,9 +144,8 @@ mlask()
 mlcat("Visual Decision Tree",
 "A visual representation of a model can often be more insightful
 than the printed textual representation.  A decision tree
-model can readily be visualised as a tree structure as we are about to
-display.
-We will read the tree from top to bottom, traversing the path corresponding
+model can readily be visualised as a tree structure as we will see.
+The tree is read from top to bottom, traversing the path corresponding
 to the answer to the question presented at each node. The leaf node
 has the final decision together with the class probabilities.")
 
@@ -111,26 +164,25 @@ mlpreview(fname, begin="")
 
 mlask()
 
-mlcat("Variable Importance",
-"One aspect of understanding the data and models that we build is what
-variables play the most significant role in predicting the outcome.
-
-We first list the variables that are actually found by the algorithm
-to be effective in the model. Then we list all the variables and report
-their relative importance in predicting the outcome.
-
-When you press the Enter key below, a plot of the same data is presented.
-A visual presentation can often be more effective.
-")
-
 # The following code based on rpart::printcp()
 # Copyright (c) Brian Ripley
 
 frame <- model$frame
 leaves <- frame$var == "<leaf>"
 used <- unique(frame$var[!leaves])
+used_vars <- paste(sort(as.character(used)), collapse=", ")
 
-cat("Variables Used:  ", paste(sort(as.character(used)), collapse=", "), ".\n\n", sep="")
+mlcat("Variable Importance",
+"One aspect of understanding the data and models that we build is what
+variables play the most significant role in predicting the outcome.
+
+The variables that are actually end up in the model are:
+{used_vars}.
+
+All variables are considered in the modelling and the relative importance
+of each variable in predicting the outcome is determined. Note that in the
+table below the actual numbers represent the relative importance
+of that variable.", end="\n\n")
 
 # The following code based on rpart:::summary.rpart()
 # Copyright (c) Brian Ripley
@@ -145,6 +197,12 @@ print(varimp[varimp>0])
 #-----------------------------------------------------------------------
 # Explore the model itself - Visual Variable Importance
 #-----------------------------------------------------------------------
+
+mlask()
+
+mlcat("Visual Importance",
+"Once again a visual presentation of the variable importance can be
+more effective in conveying the relative importance.")
 
 mlask()
 
@@ -164,11 +222,11 @@ mlask()
 mlcat("Variable Selection",
 "When the model was built, the algorithm chooses a variable for each node
 of the resulting decision tree. An entropy, information theory or gini
-based calculation is performed to choose the variable. The variable with
+based calculation is used to choose the variable. The variable with
 the highest value according to this measure is chosen for the particular
 node.
 
-Below we can see the calculations that were made for the root node of the
+Below we will see the calculations that were made for the root node of the
 tree (Node Number 1). A number of variables were considered and the variable
 with the top score was chosen for this node. The improve= is the value
 of the calculation.")
@@ -267,20 +325,23 @@ if (ff$complexity[i] > cp && !is.leaf[i]) {
   }
 }
 
-mlcat("Predicting Rain Tomorrow",
-"Below we show the predictions using the model just built. The
-decision tree model is applied to a random subset of the dataset
-of daily observations.
+mlask()
 
-This provides an insight into the performance of the model. The performance
-here is just okay based on this datasate. Note the highlighted errors. No
-model is perfect.
-", begin="\n", end="\n\n")
+mlcat("Predicting Rain Tomorrow",
+"We now use the model to make predictions. The
+decision tree model is applied to a previously unseen (by the mode)
+random subset of the dataset of daily observations, the tuning dataset.
+This dataset contains {comma(length(tu))} observations.
+
+This provides an insight into the performance of the model on new/unseen
+data. The performance
+here is okay based on this dataset. Note any highlighted errors. No
+model is perfect.", end="\n\n")
 
 ds %>%
   predict(model, newdata=., type="class") %>%
   as.data.frame() %>%
-  cbind(Actual=ds$target) %>%
+  cbind(Actual=ds[[target]]) %>%
   set_names(c("Predicted", "Actual")) %>%
   select(Actual, Predicted) %>%
   mutate(Error=ifelse(Predicted==Actual, "", "<----")) %T>%
