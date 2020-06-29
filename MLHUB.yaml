@@ -12,6 +12,7 @@ meta:
 dependencies :
   cran:
     - rpart
+    - randomForest
     - magrittr
     - dplyr
     - tidyr
