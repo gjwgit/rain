@@ -1,5 +1,4 @@
-# Predicting Rain Tomorrow
-## Decision Trees and Random Forests
+# Predicting Rain
 
 This [MLHub](https://mlhub.ai) package uses the weatherAUS dataset
 from R's [Rattle](https://rattle.togaware.com) package to train a
