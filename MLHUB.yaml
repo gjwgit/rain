@@ -16,7 +16,7 @@ dependencies :
     - magrittr
     - dplyr
     - tidyr
-    - rattle
+    - rattle=5.2.0
     - rpart.plot
     - tibble
   files:
