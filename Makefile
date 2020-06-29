@@ -7,11 +7,15 @@
 # Include standard Makefile templates.
 
 INC_BASE    = $(HOME)/.local/share/make
+INC_PDF     = $(INC_BASE)/pdf.mk
 INC_PANDOC  = $(INC_BASE)/pandoc.mk
 INC_GIT     = $(INC_BASE)/git.mk
 INC_MLHUB   = $(INC_BASE)/mlhub.mk
 INC_CLEAN   = $(INC_BASE)/clean.mk
 
+ifneq ("$(wildcard $(INC_PDF))","")
+  include $(INC_PDF)
+endif
 ifneq ("$(wildcard $(INC_PANDOC))","")
   include $(INC_PANDOC)
 endif
