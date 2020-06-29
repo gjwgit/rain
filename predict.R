@@ -47,38 +47,46 @@ form   <- formula(ds[rev(vars)])
 
 ds[vars] <- na.roughfix(ds[vars])
 
-load("rain_dt_model.RData")
+mfile <- "rain_dt_model.RData"
 
-mlcat("Provide values for the following variables", end="")
-
-# The following code based on rpart::printcp()
-# Copyright (c) Brian Ripley, GPLv2 License.
-
-frame <- model$frame
-leaves <- frame$var == "<leaf>"
-used <- unique(frame$var[!leaves])
-unused <- setdiff(names(ds), used)
-
-val <- vector()
-for (i in seq_len(length(used)))
+if (! file.exists(mfile))
 {
-  v  <- used[i]
-  cl <- class(ds[[v]])
-  if (cl == "numeric")
+  cat("The model was not found. Be sure to run the demo first.\n")
+  quit(save="no", 1, FALSE)
+}else{
+  load(mfile)
+  
+  mlcat("Provide values for the following variables", end="")
+
+  # The following code based on rpart::printcp()
+  # Copyright (c) Brian Ripley, GPLv2 License.
+
+  frame <- model$frame
+  leaves <- frame$var == "<leaf>"
+  used <- unique(frame$var[!leaves])
+  unused <- setdiff(names(ds), used)
+
+  val <- vector()
+  for (i in seq_len(length(used)))
   {
-    cl <- sprintf("numeric %4.1f - %4.1f", min(ds[[v]]), max(ds[[v]]))
-    asis <- "as.numeric"
+    v  <- used[i]
+    cl <- class(ds[[v]])
+    if (cl == "numeric")
+    {
+      cl <- sprintf("numeric %4.1f - %4.1f", min(ds[[v]]), max(ds[[v]]))
+      asis <- "as.numeric"
+    }
+    cat(sprintf("%-15s [%s]: ", v, cl))
+    entry <- scan("stdin", 0,  n=1, quiet=TRUE)
+    val <- c(val, eval(parse(text=sprintf("%s(%s)", asis, entry))))
   }
-  cat(sprintf("%-15s [%s]: ", v, cl))
-  entry <- scan("stdin", 0,  n=1, quiet=TRUE)
-  val <- c(val, eval(parse(text=sprintf("%s(%s)", asis, entry))))
+  
+  newdata <- ds[1,]
+  usedi <- sapply(used, function(x) which(x == names(ds)))
+  newdata[1,usedi] <- as.list(val)
+  unusedi <- sapply(unused, function(x) which(x == names(ds)))
+  newdata[1,unusedi] <- NA
+  
+  pr <- predict(model, newdata=newdata)[,"yes"]
+  cat(sprintf("\nI predict the chance of rain tomorrow to be %2.0f%%.\n\n", 100*pr))
 }
-
-newdata <- ds[1,]
-usedi <- sapply(used, function(x) which(x == names(ds)))
-newdata[1,usedi] <- as.list(val)
-unusedi <- sapply(unused, function(x) which(x == names(ds)))
-newdata[1,unusedi] <- NA
-
-pr <- predict(model, newdata=newdata)[,"yes"]
-cat(sprintf("\nI predict the chance of rain tomorrow to be %2.0f%%.\n\n", 100*pr))
