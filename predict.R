@@ -71,7 +71,7 @@ if (! file.exists(mfile))
   {
     v  <- used[i]
     cl <- class(ds[[v]])
-    if (cl == "numeric")
+    if (cl %in% c("numeric", "integer"))
     {
       cl <- sprintf("numeric %4.1f - %4.1f", min(ds[[v]]), max(ds[[v]]))
       asis <- "as.numeric"
