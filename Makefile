@@ -28,6 +28,9 @@ endif
 $(MODEL)_rpart_model.RData: train.R
 	Rscript $<
 
+install: rain_dt_model.RData rain_rf_model.RData
+	rsync -avzh $^ togaware.com:webapps/access/
+
 clean::
 	rm -rf rain_dt_model.pdf rain_dt_varimp.pdf
 	rm -rf rain_dt_riskchart.pdf rain_dt_model.pdf
