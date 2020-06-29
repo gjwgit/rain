@@ -24,6 +24,11 @@ The rain source code is available from
 
 ## Quick Start
 
+```console
+$ ml demo rain
+$ ml predict rain
+```
+
 ## Usage
 
 - To install mlhub (Ubuntu):
