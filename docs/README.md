@@ -47,8 +47,8 @@ The rain source code is available from
 
 ### *predict*
 
-The *predict* command can be run after the model has been built as
-part of the *demo* command.
+The *predict* command can be run after the model has been built. The
+model is built as part of the *demo* command.
 
 ```console
 $ ml predict rain
@@ -66,6 +66,7 @@ I predict the chance of rain tomorrow to be 72%.
 ## Demonstration
 
 ```console
+$ ml demo rain
 ========================================
 Predicting Rain Tomorrow - Decision Tree
 ========================================
