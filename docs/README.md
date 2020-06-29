@@ -1,5 +1,4 @@
-Decision Tree Models: Predicting Rain Tomorrow
-==============================================
+# Predicting Rain Tomorrow (Decision Trees and Random Forests)
 
 This [MLHub](https://mlhub.ai) package uses the weatherAUS dataset
 from R's [Rattle](https://rattle.togaware.com) package to train a
@@ -10,42 +9,46 @@ the amount of sunshine, the humidity, the amount of rain today,
 etc. This simplest of approaches uses the decision tree induction
 algorithm to build a model that is represented as a decision
 tree. Other (often more accurate but more complex) models include the
-random forest which builds a forest (i.e., a collection) of decision
-trees and produces an ensemble type model
-([rainrf](https://github.com/gjwgit/rain/blob/master/docs/rainrf.md)).
-Ensembles have been shown over many years to produce more accurate
-models (see, for example, the original work on [multiple inductive
+random forest which builds a forest (that is, a collection) of
+decision trees and produces an ensemble model.  Ensembles have been
+shown over many years to produce more accurate models (see, for
+example, the original work on [multiple inductive
 learning](http://togaware.com/papers/milai87.pdf)).
 
 These models come from the Essentials of Data Science by Graham
 Williams <https://bit.ly/essentials_data_science>. Further support
 material is also available from <https://essentials.togaware.com/>.
 
-Visit the github repository for more details:
-<https://github.com/gjwgit/rain>
+The rain source code is available from
+<https://github.com/gjwgit/rain>.
 
-Usage
------
+## Quick Start
 
-- To install mlhub (Ubuntu 18.04 LTS):
+## Usage
 
-```console
-$ pip3 install mlhub
-$ ml configure
-```
+- To install mlhub (Ubuntu):
 
-- To install and configure the demo:
+		$ pip3 install mlhub
+		$ ml configure
 
-```console
-$ ml install rain
-$ ml configure rain
-$ ml readme rain
-$ ml commands rain
-$ ml demo rain
-```
+- To install, configure, and run the demo:
 
-Demonstration
--------------
+		$ ml install   rain
+		$ ml configure rain
+		$ ml readme    rain
+		$ ml commands  rain
+		$ ml demo      rain
+
+- Command line tools:
+
+		$ ml train rain [--dt|--rf] [--outfile=<RData file>]
+		$ ml test  rain
+
+## Command Line Tools
+
+### *train* a model
+
+## Demonstration
 
 ```console
 ==============================================
@@ -266,3 +269,4 @@ Close the graphic window using Ctrl-w.
 ```
 ![](rain_dt_risk.png)
 
+## Resources
