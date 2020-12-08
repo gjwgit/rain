@@ -69,7 +69,7 @@ if (! file.exists(mfile))
   val <- vector()
   for (i in seq_len(length(used)))
   {
-    v  <- used[i]
+    v  <- as.character(used[i])
     cl <- class(ds[[v]])
     if (cl %in% c("numeric", "integer"))
     {
