@@ -3,7 +3,7 @@ meta:
   name         : rain
   title        : Predict if it will rain tomorrow (decision tree and random forest).
   keywords     : r, prediction, classification, decision tree, introductory, weather, climate, random forest
-  version      : 5.1.3
+  version      : 5.1.4
   languages    : R
   display      : demo
   license      : gpl3
